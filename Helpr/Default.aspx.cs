@@ -16,6 +16,7 @@ public partial class _Default : Page
         GetQueries();
     }
 
+
     private void GetQueries()
     {
         //SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings[0].ConnectionString);
@@ -31,15 +32,27 @@ public partial class _Default : Page
     }
     protected void BtnQuerySubmit_Click(object sender, EventArgs e)
     {
-            int selected = Convert.ToInt32(ddlCategory.SelectedValue);
-            String query = "INSERT INTO [dbo].[Queries](Text, Hashtag, CategoryId) values('" + AddQuerytxt.Text + "' , '" + AddHashtagtxt.Text + "' , " + selected + ")";
-            SqlCommand cmd = new SqlCommand(query, con);
-            con.Open();
-            cmd.ExecuteNonQuery();
-            con.Close();
+            object userid = Session["UserId"];
+            if (userid != null)
+            {
+                int selected = Convert.ToInt32(ddlCategory.SelectedValue);
 
-            Page.Response.Redirect(Page.Request.Url.ToString(), true);
-        
+                string q = AddQuerytxt.Text.Replace("'", "''"); //apostrophe problem fixed
+
+                String query = "INSERT INTO [dbo].[Queries](Text, Hashtag, CategoryId, UserId) values('" + q + "' , '" + AddHashtagtxt.Text + "' , '" + selected + "', '" + userid + "')";
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+
+                Page.Response.Redirect(Page.Request.Url.ToString(), true);
+            }
+
+            else
+            {
+                lblLoginError.Text = "You must Log In or Sign Up to add a question.";
+                Panel1.Visible = true;
+            }
     }
 
     protected string FormatUrl(int Id) 

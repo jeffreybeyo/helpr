@@ -62,12 +62,37 @@ public partial class SiteMaster : MasterPage
                 throw new InvalidOperationException("Validation of Anti-XSRF token failed.");
             }
         }
+
     }
 
     protected void Page_Load(object sender, EventArgs e)
     {
+        if (Session["Username"] != null)
+        {
+            alogin.Visible = false;
+            aregister.Visible = false;
+            LoginName.Text = Session["Username"].ToString();
+            ausername.Visible = true;
+            alogout.Visible = true;
+            aprofile.Visible = true;
+        }
 
+        else
+        {
+            alogin.Visible = true;
+            aregister.Visible = true;
+            ausername.Visible = false;
+            alogout.Visible = false;
+            aprofile.Visible = false;
+        }
     }
+
+    protected void logout_click(object sender, EventArgs e)
+    {
+        Session.Abandon();
+        Response.Redirect("Default.aspx", true);
+    }
+
 
     protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
     {

@@ -3,11 +3,11 @@
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 <!--DATA SOURCE LIST QUERY -->
     <asp:SqlDataSource ID="ListQueriesSql" runat="server" ConnectionString="<%$ ConnectionStrings:HelperConnectionString %>" 
-SelectCommand="SELECT Q.Id,Q.Text,Q.Hashtag,C.Name,U.Username,Q.RegDate, AC.Counter FROM [dbo].[Queries] AS Q
+SelectCommand="SELECT TOP 100 Q.Id,Q.Text,Q.Hashtag,C.Name,U.Username,Q.RegDate, AC.Counter FROM [dbo].[Queries] AS Q
 LEFT JOIN [dbo].[Users] U ON Q.UserId=U.Id
 LEFT JOIN [dbo].[Categories] C ON C.Id=Q.CategoryId
 LEFT JOIN [dbo].[AnswersCount] AC ON Q.Id=AC.QueryId
-ORDER BY Q.RegDate, AC.Counter DESC"></asp:SqlDataSource>
+ORDER BY Q.RegDate DESC, AC.Counter DESC"></asp:SqlDataSource>
  <!--DATA SOURCE INSERT QUERY -->
 <asp:SqlDataSource ID="InsertQuerySql" runat="server" ConnectionString="<%$ ConnectionStrings:HelperConnectionString %>" 
 SelectCommand="INSERT INTO [dbo].[Queries](Text) values(@Text)"></asp:SqlDataSource>
@@ -31,11 +31,13 @@ SelectCommand="INSERT INTO [dbo].[Queries](Text) values(@Text)"></asp:SqlDataSou
         <asp:Button ID="BtnAddQuery" class="btn btn-default btn-lg" runat="server" Text="Go!" OnClick="BtnQuerySubmit_Click" />
    </span>
    </div>
-        <b><asp:RequiredFieldValidator ID="RfvQuery" runat="server" ErrorMessage="<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span> Please fill all the inputs" ControlToValidate="AddQuerytxt"></asp:RequiredFieldValidator></b>
+        <b><asp:RequiredFieldValidator ID="RfvQuery" runat="server" Display="Dynamic" ErrorMessage="<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span> Please fill all the inputs" ControlToValidate="AddQuerytxt"></asp:RequiredFieldValidator></b>
         </div>
-    
+    <asp:Panel ID="Panel1" Visible="false" runat="server" class="alert alert-danger" role="alert"><center><asp:Label ID="lblLoginError" runat="server"></asp:Label></center></asp:Panel> 
     <br />
 <!--LIST QUERIES -->
+    <asp:Label ID="Label1" runat="server" Text=""></asp:Label>
+    <asp:Label ID="Label2" runat="server" Text=""></asp:Label>
 <div class="row">
     <asp:ListView id="QueryList" runat="server">
         <ItemTemplate>
@@ -46,6 +48,7 @@ SelectCommand="INSERT INTO [dbo].[Queries](Text) values(@Text)"></asp:SqlDataSou
                           <span class="label label-default"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;<asp:Label ID="Categorylbl" runat="server" Text='<%#Eval("Name")%>'></asp:Label></span>
                        </p>
                     <h3><asp:Label ID="QueryTextlbl" runat="server" Text='<%#Eval("Text") %>'></asp:Label></h3>
+                    <%--<p class="text-left"><asp:Label ID="Date" runat="server" Text='<%#Eval("RegDate")%>'></asp:Label></p>--%>
                     <p class="text-right">#<asp:Label ID="Hashtag" runat="server" Text='<%#Eval("Hashtag")%>'></asp:Label></p>
                 </asp:HyperLink>
             </div>

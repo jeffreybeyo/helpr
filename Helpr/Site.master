@@ -13,7 +13,7 @@
     </asp:PlaceHolder>
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
-
+    
 
 </head>
 <body>
@@ -47,7 +47,7 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/"><b><span style="font-size:1em;" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>Helpr</b></a>
+                    <a class="navbar-brand" runat="server" href="~/"><b><span style="font-size:1em;" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>Bilenvardir.com</b></a>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
@@ -55,27 +55,27 @@
                         <li><a runat="server" href="~/About">About</a></li>
                         <li><a runat="server" href="~/Contact">Contact</a></li>
                     </ul>
-                    <asp:LoginView runat="server" ViewStateMode="Disabled">
-                        <AnonymousTemplate>
+                                
                             <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Register">Register</a></li>
-                                <li><a runat="server" href="~/Account/Login">Log in</a></li>
-                            </ul>
-                        </AnonymousTemplate>
-                        <LoggedInTemplate>
-                            <ul class="nav navbar-nav navbar-right">
-                                <li><a runat="server" href="~/Account/Manage" title="Manage your account">Hello, <%: Context.User.Identity.GetUserName()  %>!</a></li>
-                                <li>
-                                    <asp:LoginStatus runat="server" LogoutAction="Redirect" LogoutText="Log off" LogoutPageUrl="~/" OnLoggingOut="Unnamed_LoggingOut" />
+                             
+                                <li><a id="aregister" runat="server" href="~/Register">Register</a></li>
+                                <li><a id="alogin" runat="server" href="~/Login">Log in</a></li>
+                                 
+                                <li class="dropdown">
+                               <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" id="ausername" visible="false" runat="server"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<asp:Label ID="LoginName" runat="server" Text=""></asp:Label><span class="caret"></a>
+                                <ul class="dropdown-menu">
+                                 <li><asp:LinkButton ID="aprofile" visible="false" runat="server" Text="Profile"></asp:LinkButton></li>
+                                <li role="separator" class="divider"></li>
+                                <li><asp:LinkButton ID="alogout" visible="false"  OnClick="logout_click" runat="server"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> &nbsp;Logout</asp:LinkButton></li>
+                                </ul>
                                 </li>
                             </ul>
-                        </LoggedInTemplate>
-                    </asp:LoginView>
-                </div>
             </div>
+                </div>
         </div>
         <div class="container body-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server">
+              
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
