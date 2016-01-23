@@ -15,21 +15,39 @@ ORDER BY Q.RegDate DESC, AC.Counter DESC"></asp:SqlDataSource>
 
 <!--ADD QUERY -->
     <div class="alert alert-warning text-center" role="alert">
+        
+<div class="row">
+  <div class="col-lg-4">
     <div class="input-group input-group-lg">
-     <span class="input-group-addon" id="sizing-addon1">Query</span>
-    <asp:TextBox ID="AddQuerytxt" class="form-control" placeholder="So...?" runat="server"></asp:TextBox>
-           <span class="input-group-addon" id="sizing-addon3">Category</span>
-       
-         <asp:DropDownList ID="ddlCategory" CssClass="form-control" runat="server" DataSourceID="ListCategorySql" DataTextField="Name" DataValueField="Id"></asp:DropDownList>
+       <span class="input-group-addon" id="sizing-addon1"  aria-label="Query">Query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+      <asp:TextBox ID="AddQuerytxt" class="form-control" placeholder="So...?" runat="server"></asp:TextBox>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-4 -->
 
-    <span class="input-group-addon" id="sizing-addon4">Your Hashtag</span>
+  <div class="col-lg-4">
+    <div class="input-group input-group-lg">
+       <span class="input-group-addon" id="sizing-addon3">Category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <asp:DropDownList ID="ddlCategory" CssClass="form-control" runat="server" DataSourceID="ListCategorySql" DataTextField="Name" DataValueField="Id"></asp:DropDownList>
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-4 -->
+
+      <div class="col-lg-4">
+    <div class="input-group input-group-lg">
+      <span class="input-group-addon" id="sizing-addon4">Your Hashtag</span>
         <asp:TextBox ID="AddHashtagtxt" class="form-control" placeholder="onekeyword" runat="server"></asp:TextBox>
-        <span class="input-group-btn">
-        <asp:Button ID="BtnAddQuery" class="btn btn-default btn-lg" runat="server" Text="Go!" OnClick="BtnQuerySubmit_Click" />
-   </span>
-   </div>
-        <b><asp:RequiredFieldValidator ID="RfvQuery" runat="server" Display="Dynamic" ErrorMessage="<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span> Please fill all the inputs" ControlToValidate="AddQuerytxt"></asp:RequiredFieldValidator></b>
+    </div><!-- /input-group -->  
+  </div><!-- /.col-lg-4 -->
+
+    <div class="col-lg-2">
+    <div class="input-group input-group-lg">
+     <asp:Button ID="Button1" class="btn btn-default btn-lg" runat="server" Text="Go!" OnClick="BtnQuerySubmit_Click" />
+    </div><!-- /input-group -->
+  </div><!-- /.col-lg-2 -->
+</div><!-- /.row -->
         </div>
+
+
+<b><asp:RequiredFieldValidator ID="RfvQuery" runat="server" Display="Dynamic" ErrorMessage="<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span> Please fill all the inputs" ControlToValidate="AddQuerytxt"></asp:RequiredFieldValidator></b>
     <asp:Panel ID="Panel1" Visible="false" runat="server" class="alert alert-danger" role="alert"><center><asp:Label ID="lblLoginError" runat="server"></asp:Label></center></asp:Panel> 
     <br />
 <!--LIST QUERIES -->

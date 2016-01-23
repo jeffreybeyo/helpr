@@ -21,9 +21,18 @@ public partial class Answers : System.Web.UI.Page
             GetQuery(QueryId);
             GetAnswers(QueryId);
             Queryglb = QueryId;
+            CheckFollowUp();
          }
 
-        CheckFollowUp();
+        else
+        {
+            PanelDown.Visible = false;
+            PanelUp.Visible = false;
+            BtnAddAnswer.Visible = false;
+            txtAnswer.Visible = false;
+        }
+
+        
         
     }
 
