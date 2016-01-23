@@ -9,6 +9,9 @@
     <div class="form-horizontal">
         <h4>Create a new account.</h4>
         <hr />
+        <asp:Panel ID="PanelUsernameError" Visible="false" runat="server" class="alert alert-danger" role="alert">
+        <asp:Label ID="lblUsername_Error" runat="server" Text=""></asp:Label>
+        </asp:Panel>
         <asp:ValidationSummary runat="server" CssClass="text-danger" />
         <div class="form-group">
             <asp:Label runat="server" AssociatedControlID="Username" CssClass="col-md-2 control-label">User name</asp:Label>
@@ -25,6 +28,9 @@
                 <asp:TextBox runat="server" ID="Email" CssClass="form-control" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
                     CssClass="text-danger" ErrorMessage="Email field is required." />
+                <br />
+                <asp:RegularExpressionValidator runat="server" CssClass="text-danger" ControlToValidate = "Email" Display ="Dynamic" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"
+    ErrorMessage="Please enter valid email address. Eg. Something@domain.com"></asp:RegularExpressionValidator>
             </div>
         </div>
 

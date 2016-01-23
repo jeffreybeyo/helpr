@@ -75,6 +75,7 @@ public partial class SiteMaster : MasterPage
             ausername.Visible = true;
             alogout.Visible = true;
             aprofile.Visible = true;
+            afollowups.Visible = true;
         }
 
         else
@@ -84,11 +85,13 @@ public partial class SiteMaster : MasterPage
             ausername.Visible = false;
             alogout.Visible = false;
             aprofile.Visible = false;
+            afollowups.Visible = false;
         }
     }
 
     protected void logout_click(object sender, EventArgs e)
     {
+        Session.Clear();
         Session.Abandon();
         Response.Redirect("Default.aspx", true);
     }

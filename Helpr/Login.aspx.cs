@@ -12,9 +12,7 @@ public partial class Login : System.Web.UI.Page
     SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["HelperConnectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
-        RegisterHyperLink.NavigateUrl = "~/Register";
-
-        
+        RegisterHyperLink.NavigateUrl = "~/Register";   
     }
 
     protected void LogIn(object sender, EventArgs e)

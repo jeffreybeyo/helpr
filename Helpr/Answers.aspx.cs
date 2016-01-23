@@ -22,27 +22,61 @@ public partial class Answers : System.Web.UI.Page
             GetAnswers(QueryId);
             Queryglb = QueryId;
          }
+
+        CheckFollowUp();
         
+    }
+
+    protected void CheckFollowUp()
+    {
+        object userid = Session["UserId"];
+        if (userid != null)
+        {
+            String query = "SELECT * FROM [dbo].[FollowUp] AS FU WHERE FU.UserId=@userid AND FU.QueryId=@queryid";
+            SqlCommand cmd_check = new SqlCommand(query, con);
+            cmd_check.Parameters.AddWithValue("@userid", userid);
+            cmd_check.Parameters.AddWithValue("@queryid", Queryglb);
+            con.Open();
+            SqlDataReader dr = cmd_check.ExecuteReader();
+
+            if (dr.HasRows)
+            {
+                PanelDown.Visible = true;
+                PanelUp.Visible = false;
+
+            }
+            con.Close();
+        }
+
+        else
+        {
+            lblLoginError.Text = "You must Log In or Sign Up to follow up this.";
+            lblLoginError.Visible = true;
+        }
+
+
     }
 
 
     private void GetAnswers(int QueryId)
     {
-        String queryans = String.Format("SELECT A.Text, U.Username, A.RegDate FROM [dbo].[Answers] AS A INNER JOIN [dbo].[Users] U ON U.Id=A.UserId WHERE A.QueryId ={0} ORDER BY RegDate DESC", QueryId);        
         
-        con.Open();
-        SqlCommand cmd = new SqlCommand(queryans, con);
-        SqlDataReader dr = cmd.ExecuteReader();
-        AnswersList.DataSource = dr;
-        AnswersList.DataBind();
-        con.Close();
+            String queryans = String.Format("SELECT A.Text, U.Username, A.RegDate FROM [dbo].[Answers] AS A INNER JOIN [dbo].[Users] U ON U.Id=A.UserId WHERE A.QueryId ={0} ORDER BY RegDate DESC", QueryId);
+
+            con.Open();
+            SqlCommand cmd = new SqlCommand(queryans, con);
+            SqlDataReader dr = cmd.ExecuteReader();
+            AnswersList.DataSource = dr;
+            AnswersList.DataBind();
+            con.Close();
+
     }
 
     private void GetQuery(int QueryId)
     {
-       String queryque = String.Format("SELECT Q.Text, Q.Hashtag, C.Name, U.Username, Q.RegDate, AC.Counter FROM [dbo].[Queries] AS Q INNER JOIN [dbo].[Categories] C ON C.Id= Q.CategoryId INNER JOIN [dbo].[Users] U ON U.Id=Q.UserId LEFT JOIN	[dbo].[AnswersCount] AC ON AC.QueryId=Q.Id WHERE Q.Id={0}", QueryId);
+       String queryque = String.Format("SELECT Q.Text, Q.Hashtag, C.Name, U.Username, Q.RegDate, AC.Counter FROM [dbo].[Queries] AS Q INNER JOIN [dbo].[Categories] C ON C.Id= Q.CategoryId INNER JOIN [dbo].[Users] U ON U.Id=Q.UserId LEFT JOIN [dbo].[AnswersCount] AC ON AC.QueryId=Q.Id WHERE Q.Id={0}", QueryId);
       
-        con.Open();
+       con.Open();
        SqlCommand cmd2 = new SqlCommand(queryque, con);
        SqlDataReader dr2 = cmd2.ExecuteReader();
        QueryView.DataSource = dr2;
@@ -70,5 +104,44 @@ public partial class Answers : System.Web.UI.Page
             lblLoginError.Text = "You must Log In or Sign Up to answer this.";
             Panel1.Visible = true;
         }
+    }
+
+    protected void BtnFollowup_Add(object sender, EventArgs e)
+    {
+        object userid = Session["UserId"];
+        if (userid != null)
+        {
+            String query = "INSERT INTO [dbo].[FollowUp](UserId, QueryId) values('" + userid + "', '" + Queryglb + "')";
+            SqlCommand cmd = new SqlCommand(query, con);
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+            PanelUp.Visible = false;
+            PanelDown.Visible = true;
+        }
+
+        else
+        {
+            lblLoginError.Text = "You must Log In or Sign Up to follow up this.";
+            Panel1.Visible = true;
+        }
+    }
+
+    protected void BtnFollowup_Delete(object sender, EventArgs e)
+    {
+        object userid = Session["UserId"];
+        if (userid != null)
+        {
+            String query = "DELETE FROM [dbo].[FollowUp] WHERE UserId=@userid AND QueryId=@queryid";
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@userid", userid);
+            cmd.Parameters.AddWithValue("@queryid", Queryglb);
+            con.Open();
+            cmd.ExecuteNonQuery();
+            con.Close();
+
+            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+        }
+     
     }
 }

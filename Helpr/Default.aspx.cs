@@ -39,7 +39,9 @@ public partial class _Default : Page
 
                 string q = AddQuerytxt.Text.Replace("'", "''"); //apostrophe problem fixed
 
-                String query = "INSERT INTO [dbo].[Queries](Text, Hashtag, CategoryId, UserId) values('" + q + "' , '" + AddHashtagtxt.Text + "' , '" + selected + "', '" + userid + "')";
+                String h =AddHashtagtxt.Text.Replace(" ", String.Empty);
+
+                String query = "INSERT INTO [dbo].[Queries](Text, Hashtag, CategoryId, UserId) values('" + q + "' , '" + h + "' , '" + selected + "', '" + userid + "')";
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
                 cmd.ExecuteNonQuery();
@@ -60,4 +62,5 @@ public partial class _Default : Page
         return "Answers.aspx?QueryId=" + Id;
 
     }
+
 }

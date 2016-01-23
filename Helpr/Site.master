@@ -47,13 +47,14 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a class="navbar-brand" runat="server" href="~/"><b><span style="font-size:1em;" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>Bilenvardir.com</b></a>
+                    <a class="navbar-brand" runat="server" href="~/"><b><span style="font-size:1em;" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>Soralet</b></a>
+                    <p class="navbar-text"><i>"Satisfy Your Curiosity"</i></p>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/">Home</a></li>
-                        <li><a runat="server" href="~/About">About</a></li>
-                        <li><a runat="server" href="~/Contact">Contact</a></li>
+                        <li><a runat="server" href="~/">Stream</a></li>
+                        <li><a runat="server" href="~/Trends">Popular</a></li>
+                        <li><a runat="server" ID="afollowups" visible="false" href="~/FollowUps">Follow Ups</a></li>
                     </ul>
                                 
                             <ul class="nav navbar-nav navbar-right">
@@ -64,9 +65,9 @@
                                 <li class="dropdown">
                                <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" id="ausername" visible="false" runat="server"> <span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<asp:Label ID="LoginName" runat="server" Text=""></asp:Label><span class="caret"></a>
                                 <ul class="dropdown-menu">
-                                 <li><asp:LinkButton ID="aprofile" visible="false" runat="server" Text="Profile"></asp:LinkButton></li>
+                                 <li><asp:LinkButton ID="aprofile" visible="false" runat="server" Text="Profile" CausesValidation="false"></asp:LinkButton></li>  
                                 <li role="separator" class="divider"></li>
-                                <li><asp:LinkButton ID="alogout" visible="false"  OnClick="logout_click" runat="server"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> &nbsp;Logout</asp:LinkButton></li>
+                                <li><asp:LinkButton ID="alogout" visible="false" CausesValidation="False"  OnClick="logout_click" runat="server"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> &nbsp;Logout</asp:LinkButton></li>
                                 </ul>
                                 </li>
                             </ul>
