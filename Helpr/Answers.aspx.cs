@@ -91,6 +91,16 @@ public partial class Answers : System.Web.UI.Page
        QueryView.DataSource = dr2;
        QueryView.DataBind();
        con.Close();
+
+        //get answer counter
+       String queryans = String.Format("SELECT * FROM [dbo].[AnswersCount] AS AC WHERE AC.QueryId={0}", QueryId);
+
+       con.Open();
+       SqlCommand cmd3 = new SqlCommand(queryans, con);
+       SqlDataReader dr3 = cmd2.ExecuteReader();
+       CounterView.DataSource = dr3;
+       CounterView.DataBind();
+       con.Close();
     }
 
     protected void BtnAnswerSubmit_Click(object sender, EventArgs e)
@@ -100,12 +110,21 @@ public partial class Answers : System.Web.UI.Page
         if (userid != null)
         {
             string q = txtAnswer.Text.Replace("'", "''"); //apostrophe problem fixed
-            String query = "INSERT INTO [dbo].[Answers](Text, QueryId, UserId) values('" + q + "' , '" + Queryglb + "' , '" + userid + "')";
-            SqlCommand cmd = new SqlCommand(query, con);
-            con.Open();
-            cmd.ExecuteNonQuery();
-            con.Close();
-            Page.Response.Redirect(Page.Request.Url.ToString(), true);
+            if (q.Contains("sex") || q.Contains("seks") || q.Contains("prezervatif") || q.Contains("condom") || q.Contains("kondom") || q.Contains(" am ") || q.Contains(" amcik ") || q.Contains(" sik ") || q.Contains(" amina ") || q.Contains(" amına ") || q.Contains("amk") || q.Contains("veled-i zina") || q.Contains("orospu") || q.Contains("yavsak") || q.Contains("yavşak") || q.Contains("ibne") || q.Contains("göt") || q.Contains("fuck"))
+            {
+                lblLoginError.Text = "So nasty, but not for this environment.";
+                Panel1.Visible = true;
+            }
+
+            else
+            {
+                String query = "INSERT INTO [dbo].[Answers](Text, QueryId, UserId) values('" + q + "' , '" + Queryglb + "' , '" + userid + "')";
+                SqlCommand cmd = new SqlCommand(query, con);
+                con.Open();
+                cmd.ExecuteNonQuery();
+                con.Close();
+                Page.Response.Redirect(Page.Request.Url.ToString(), true);
+            }
         }
 
         else

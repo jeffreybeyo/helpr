@@ -1,18 +1,18 @@
-﻿<%@ Page Title="Home Page" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
+﻿<%@ Page Title="Satisfy Your Curiosity" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true" CodeFile="Default.aspx.cs" Inherits="_Default" %>
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 <!--DATA SOURCE LIST QUERY -->
-    <asp:SqlDataSource ID="ListQueriesSql" runat="server" ConnectionString="<%$ ConnectionStrings:HelperConnectionString %>" 
-SelectCommand="SELECT TOP 100 Q.Id,Q.Text,Q.Hashtag,C.Name,U.Username,Q.RegDate, AC.Counter FROM [dbo].[Queries] AS Q
+    <asp:SqlDataSource ID="ListQueriesSql" runat="server" ConnectionString="<%$ ConnectionStrings:HelperConnectionString %>"
+        SelectCommand="SELECT TOP 100 Q.Id,Q.Text,Q.Hashtag,C.Name,U.Username,[dbo].[GetPostedOnDate](Q.RegDate) AS RegDate, AC.Counter FROM [dbo].[Queries] AS Q
 LEFT JOIN [dbo].[Users] U ON Q.UserId=U.Id
 LEFT JOIN [dbo].[Categories] C ON C.Id=Q.CategoryId
 LEFT JOIN [dbo].[AnswersCount] AC ON Q.Id=AC.QueryId
-ORDER BY Q.RegDate DESC, AC.Counter DESC"></asp:SqlDataSource>
+ORDER BY Q.RegDate DESC"></asp:SqlDataSource>
 <!--DATA SOURCE LIST CATEGORY -->
     <asp:SqlDataSource ID="ListCategorySql" runat="server" ConnectionString="<%$ ConnectionStrings:HelperConnectionString %>"
         SelectCommand="SELECT Id, Name FROM [dbo].[Categories] ORDER BY Name"></asp:SqlDataSource>
 
-
+        <asp:Panel ID="Panel1" Visible="false" runat="server" class="alert alert-danger" role="alert"><center><asp:Label ID="lblLoginError" runat="server"></asp:Label></center></asp:Panel> 
 <!--ADD QUERY -->
     <div class="alert alert-warning text-center" role="alert">
         
@@ -34,7 +34,7 @@ ORDER BY Q.RegDate DESC, AC.Counter DESC"></asp:SqlDataSource>
       <div class="col-lg-4">
     <div class="input-group input-group-lg">
       <span class="input-group-addon" id="sizing-addon4">Your Hashtag</span>
-        <asp:TextBox ID="AddHashtagtxt" class="form-control" placeholder="onekeyword" runat="server"></asp:TextBox>
+        <asp:TextBox ID="AddHashtagtxt" class="form-control" placeholder="oneword" runat="server"></asp:TextBox>
     </div><!-- /input-group -->  
   </div><!-- /.col-lg-4 -->
 
@@ -48,7 +48,7 @@ ORDER BY Q.RegDate DESC, AC.Counter DESC"></asp:SqlDataSource>
 
 
 <b><asp:RequiredFieldValidator ID="RfvQuery" runat="server" Display="Dynamic" ErrorMessage="<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span> Please fill all the inputs" ControlToValidate="AddQuerytxt"></asp:RequiredFieldValidator></b>
-    <asp:Panel ID="Panel1" Visible="false" runat="server" class="alert alert-danger" role="alert"><center><asp:Label ID="lblLoginError" runat="server"></asp:Label></center></asp:Panel> 
+
     <br />
 <!--LIST QUERIES -->
 <div class="row">
@@ -61,8 +61,10 @@ ORDER BY Q.RegDate DESC, AC.Counter DESC"></asp:SqlDataSource>
                           <span class="label label-success"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;<asp:Label ID="Categorylbl" runat="server" Text='<%#Eval("Name")%>'></asp:Label></span>
                        </p>
                     <h3><asp:Label ID="QueryTextlbl" runat="server" Text='<%#Eval("Text") %>'></asp:Label></h3>
-                    <%--<p class="text-left"><asp:Label ID="Date" runat="server" Text='<%#Eval("RegDate")%>'></asp:Label></p>--%>
-                    <p class="text-right">#<asp:Label ID="Hashtag" runat="server" Text='<%#Eval("Hashtag")%>'></asp:Label></p>
+                    <div>
+                    <%--<p><asp:Label ID="Date" runat="server" Text='<%#Eval("RegDate")%>'></asp:Label>--%>
+                    <p align="right"><%--<span class="pull-right">--%>#<asp:Label ID="Hashtag" runat="server" Text='<%#Eval("Hashtag")%>'></asp:Label><%--</span>--%></p>
+                    </div>
                 </asp:HyperLink>
             </div>
          </ItemTemplate>

@@ -14,11 +14,12 @@ public partial class Trends : System.Web.UI.Page
     {
         GetTrendHashtags();
         GetPopularQueries();
+        //GetPopularCategories();
     }
 
     private void GetTrendHashtags()
     {
-        String query = "SELECT  TOP 10 Q.Hashtag, COUNT(Q.Hashtag) AS HCounter, COUNT(FU.QueryId) AS FUCounter FROM [dbo].[Queries] AS Q LEFT JOIN [dbo].[FollowUp] FU ON FU.QueryId=Q.Id GROUP BY Q.Hashtag ORDER BY HCounter DESC, FUCounter DESC";
+        String query = "SELECT  TOP 3 Q.Hashtag, COUNT(Q.Hashtag) AS HCounter, COUNT(FU.QueryId) AS FUCounter FROM [dbo].[Queries] AS Q LEFT JOIN [dbo].[FollowUp] FU ON FU.QueryId=Q.Id GROUP BY Q.Hashtag ORDER BY HCounter DESC, FUCounter DESC";
         SqlCommand cmd = new SqlCommand(query, con);
         con.Open();
         SqlDataReader dr = cmd.ExecuteReader();
@@ -27,6 +28,18 @@ public partial class Trends : System.Web.UI.Page
         HashtagList.DataBind();
         con.Close();
     }
+
+    //private void GetPopularCategories()
+    //{
+    //    String query = "SELECT TOP 3 COUNT(C.Id) AS CCount, C.Name FROM [dbo].[Categories] AS C INNER JOIN [dbo].[Queries] Q ON Q.CategoryId=C.Id GROUP BY C.Name ORDER BY CCount DESC";
+    //    SqlCommand cmd = new SqlCommand(query, con);
+    //    con.Open();
+    //    SqlDataReader dr = cmd.ExecuteReader();
+
+    //    CategoryList.DataSource = dr;
+    //    CategoryList.DataBind();
+    //    con.Close();
+    //}
 
     private void GetPopularQueries()
     {

@@ -1,5 +1,6 @@
 ﻿<%@ Page Title="Answers" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"  CodeFile="Answers.aspx.cs" Inherits="Answers" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
+    <asp:Panel ID="Panel1" Visible="false" runat="server" class="alert alert-danger" role="alert"><asp:Label ID="lblLoginError" runat="server" Text=""></asp:Label></asp:Panel> 
 
   <div class="jumbotron">
       <span class="text-muted pull-right">
@@ -17,23 +18,29 @@
     <asp:ListView id="QueryView" runat="server" Visible="true">
      <ItemTemplate>
         <h4><span class="label label-success"><asp:Label ID="lblCategory" runat="server" Text='<%#Eval("Name")%>'></asp:Label></span>
-        #<asp:Label ID="lblHashtag" runat="server" Text='<%#Eval("Hashtag")%>'></asp:Label>
+        #<asp:Label ID="lblHashtag" runat="server" Text='<%#Eval("Hashtag")%>'></asp:Label></h4>
            
-  <h1><asp:Label ID="lblQuery" runat="server" Text='<%#Eval("Text")%>'></asp:Label><small>&nbsp;-&nbsp;<asp:Label ID="QUserlbl" runat="server" Text='<%#Eval("Username")%>'></asp:Label></small></h1>
+  <h1><asp:Label ID="lblQuery" runat="server" Text='<%#Eval("Text")%>'></asp:Label></h1><h1><small>&nbsp;-&nbsp;<asp:Label ID="QUserlbl" runat="server" Text='<%#Eval("Username")%>'></asp:Label></small></h1>
 </ItemTemplate>
 </asp:ListView>
 <div class="input-group input-group-lg">
-<%--    <asp:Panel ID="Panel2" runat="server">--%>
+
+        <asp:ListView id="CounterView" runat="server" Visible="true">
+        <ItemTemplate>
   <span class="input-group-addon" id="sizing-addon1">
-      <span class="badge"><asp:Label ID="lblCounter" runat="server" Text='<%#Eval("Counter")%>'></asp:Label></span> answers already</span>
+      <span class="badge"><asp:Label ID="lblCounter" runat="server" Text='<%#Eval("Counter")%>'></asp:Label></span></span>
+            </ItemTemplate>
+        </asp:ListView>
     <asp:TextBox ID="txtAnswer" runat="server" class="form-control" placeholder="Share your opinion" aria-describedby="sizing-addon1"></asp:TextBox>
     <asp:Button ID="BtnAddAnswer" class="btn btn-default btn-lg" runat="server" Text="Go!"  OnClick="BtnAnswerSubmit_Click" />
-<%--       </asp:Panel>--%>
+        
 </div>
 
               <center><b><asp:RequiredFieldValidator ID="RfvAnswer" runat="server" Display="Dynamic" ErrorMessage="<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span> Please fill all the inputs" ControlToValidate="txtAnswer"></asp:RequiredFieldValidator></b></center>
 </div>
- <asp:Panel ID="Panel1" Visible="false" runat="server" class="alert alert-danger" role="alert"><asp:Label ID="lblLoginError" runat="server" Text=""></asp:Label></asp:Panel> 
+
+    <%--<div class="fb-share-button" data-href="<%#Request.Url.Host%>" data-layout="icon_link"></div>--%>
+
 <asp:ListView id="AnswersList" runat="server">
         <ItemTemplate>
 <div class="panel panel-default">

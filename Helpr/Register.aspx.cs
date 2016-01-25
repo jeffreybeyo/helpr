@@ -44,10 +44,6 @@ public partial class Register : System.Web.UI.Page
         con.Open();
         cmd.ExecuteNonQuery();
         con.Close();
-        
-        Response.Redirect("Default.aspx", true);
-        //}
-        
-        
+         
     }
 }

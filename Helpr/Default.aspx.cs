@@ -36,11 +36,20 @@ public partial class _Default : Page
             if (userid != null)
             {
                 int selected = Convert.ToInt32(ddlCategory.SelectedValue);
+                
+                //fix apostrophe problem
+                string q = AddQuerytxt.Text.Replace("'", "''"); 
+                
+                //avoid bad words
+                if (q.Contains("sex") || q.Contains("seks") || q.Contains("prezervatif") || q.Contains("condom") || q.Contains("kondom") || q.Contains(" am ") || q.Contains(" amcik ") || q.Contains(" sik ") || q.Contains(" amina ") || q.Contains(" amına ") || q.Contains("amk") || q.Contains("veled-i zina") || q.Contains("orospu") || q.Contains("yavsak") || q.Contains("yavşak") || q.Contains("ibne") || q.Contains("göt") || q.Contains("fuck"))
+                {
+                    lblLoginError.Text = "So nasty, but not for this environment.";
+                    Panel1.Visible = true;
+                }
 
-                string q = AddQuerytxt.Text.Replace("'", "''"); //apostrophe problem fixed
-
+                else
+                {
                 String h =AddHashtagtxt.Text.Replace(" ", String.Empty);
-
                 String query = "INSERT INTO [dbo].[Queries](Text, Hashtag, CategoryId, UserId) values('" + q + "' , '" + h + "' , '" + selected + "', '" + userid + "')";
                 SqlCommand cmd = new SqlCommand(query, con);
                 con.Open();
@@ -48,6 +57,7 @@ public partial class _Default : Page
                 con.Close();
 
                 Page.Response.Redirect(Page.Request.Url.ToString(), true);
+                }
             }
 
             else

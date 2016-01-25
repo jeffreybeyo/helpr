@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Web;
@@ -9,6 +11,7 @@ using System.Web.UI.WebControls;
 
 public partial class SiteMaster : MasterPage
 {
+    SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["HelperConnectionString"].ConnectionString);
     private const string AntiXsrfTokenKey = "__AntiXsrfToken";
     private const string AntiXsrfUserNameKey = "__AntiXsrfUserName";
     private string _antiXsrfTokenValue;
@@ -67,7 +70,8 @@ public partial class SiteMaster : MasterPage
 
     protected void Page_Load(object sender, EventArgs e)
     {
-        if (Session["Username"] != null)
+        object userid = Session["UserId"];
+        if (userid != null)
         {
             alogin.Visible = false;
             aregister.Visible = false;
@@ -76,6 +80,16 @@ public partial class SiteMaster : MasterPage
             alogout.Visible = true;
             aprofile.Visible = true;
             afollowups.Visible = true;
+
+            //check followup count
+            String query = "SELECT COUNT(FU.Id) AS FUCount, U.Id FROM [dbo].[FollowUp] AS FU RIGHT JOIN [dbo].[Users] U ON U.Id=FU.UserId WHERE U.Id=@userid GROUP BY U.Id";
+            con.Open();
+
+            SqlCommand cmd = new SqlCommand(query, con);
+            cmd.Parameters.AddWithValue("@userid", userid);
+            FUCountlbl.Text = cmd.ExecuteScalar().ToString();
+
+            con.Close();
         }
 
         else

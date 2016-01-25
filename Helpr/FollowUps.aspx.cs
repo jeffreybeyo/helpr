@@ -22,7 +22,7 @@ public partial class FollowUps : System.Web.UI.Page
         object userid = Session["UserId"];
         if (userid != null)
         {
-            String query = "SELECT FU.UserId, FU.QueryId, Q.Text, U.Username AS QSender, C.Name AS CName, Q.Hashtag, Q.RegDate, AC.Counter AS ACount FROM [dbo].[FollowUp] AS FU INNER JOIN [dbo].[Queries] Q ON Q.Id=FU.QueryId INNER JOIN [dbo].[Categories] C ON C.Id=Q.CategoryId INNER JOIN [dbo].[Users] U ON U.Id=Q.UserId LEFT JOIN [dbo].[AnswersCount] AC ON AC.QueryId=FU.QueryId WHERE FU.UserId=@userid ORDER BY FU.RegDate DESC";
+            String query = "SELECT FU.UserId, FU.QueryId, Q.Text, U.Username AS QSender, C.Name AS CName, Q.RegDate FROM [dbo].[FollowUp] AS FU INNER JOIN [dbo].[Queries] Q ON Q.Id=FU.QueryId INNER JOIN [dbo].[Categories] C ON C.Id=Q.CategoryId INNER JOIN [dbo].[Users] U ON U.Id=Q.UserId WHERE FU.UserId=@userid ORDER BY FU.RegDate DESC";
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@userid", userid);
             con.Open();
