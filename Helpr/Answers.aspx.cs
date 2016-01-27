@@ -12,8 +12,11 @@ public partial class Answers : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["HelperConnectionString"].ConnectionString);
     int Queryglb;
+    String title;
+    String text;
+    String username;
     protected void Page_Load(object sender, EventArgs e)
-    { 
+    {
         int QueryId = -1;
 
         if (Request.Params["QueryId"] != null && int.TryParse(Request.Params["QueryId"], out QueryId))
@@ -22,7 +25,7 @@ public partial class Answers : System.Web.UI.Page
             GetAnswers(QueryId);
             Queryglb = QueryId;
             CheckFollowUp();
-         }
+        }
 
         else
         {
@@ -32,8 +35,8 @@ public partial class Answers : System.Web.UI.Page
             txtAnswer.Visible = false;
         }
 
-        
-        
+
+
     }
 
     protected void CheckFollowUp()
@@ -69,48 +72,58 @@ public partial class Answers : System.Web.UI.Page
 
     private void GetAnswers(int QueryId)
     {
-        
-            String queryans = String.Format("SELECT A.Text, U.Username, A.RegDate FROM [dbo].[Answers] AS A INNER JOIN [dbo].[Users] U ON U.Id=A.UserId WHERE A.QueryId ={0} ORDER BY RegDate DESC", QueryId);
 
-            con.Open();
-            SqlCommand cmd = new SqlCommand(queryans, con);
-            SqlDataReader dr = cmd.ExecuteReader();
-            AnswersList.DataSource = dr;
-            AnswersList.DataBind();
-            con.Close();
+        String queryans = String.Format("SELECT A.Text, U.Username, A.RegDate FROM [dbo].[Answers] AS A INNER JOIN [dbo].[Users] U ON U.Id=A.UserId WHERE A.QueryId ={0} ORDER BY RegDate DESC", QueryId);
+
+        con.Open();
+        SqlCommand cmd = new SqlCommand(queryans, con);
+        SqlDataReader dr = cmd.ExecuteReader();
+        AnswersList.DataSource = dr;
+        AnswersList.DataBind();
+        con.Close();
 
     }
 
     private void GetQuery(int QueryId)
     {
-       String queryque = String.Format("SELECT Q.Text, Q.Hashtag, C.Name, U.Username, Q.RegDate, AC.Counter FROM [dbo].[Queries] AS Q INNER JOIN [dbo].[Categories] C ON C.Id= Q.CategoryId INNER JOIN [dbo].[Users] U ON U.Id=Q.UserId LEFT JOIN [dbo].[AnswersCount] AC ON AC.QueryId=Q.Id WHERE Q.Id={0}", QueryId);
-      
-       con.Open();
-       SqlCommand cmd2 = new SqlCommand(queryque, con);
-       SqlDataReader dr2 = cmd2.ExecuteReader();
-       QueryView.DataSource = dr2;
-       QueryView.DataBind();
-       con.Close();
+        String queryque = String.Format("SELECT Q.Text, Q.Hashtag, C.Name, U.Username, Q.RegDate, AC.Counter FROM [dbo].[Queries] AS Q INNER JOIN [dbo].[Categories] C ON C.Id= Q.CategoryId INNER JOIN [dbo].[Users] U ON U.Id=Q.UserId LEFT JOIN [dbo].[AnswersCount] AC ON AC.QueryId=Q.Id WHERE Q.Id={0}", QueryId);
+
+        con.Open();
+        SqlCommand cmd2 = new SqlCommand(queryque, con);      
+        SqlDataReader dr2 = cmd2.ExecuteReader();
+        QueryView.DataSource = dr2;
+        QueryView.DataBind();
+        con.Close();
+
+        con.Open();
+        DataTable dt = new DataTable();
+        SqlDataAdapter adap = new SqlDataAdapter(cmd2);
+        adap.Fill(dt);
+        String result = dt.Rows[0]["Text"].ToString();
+        Page.Title = result;
+        con.Close();
 
         //get answer counter
-       String queryans = String.Format("SELECT * FROM [dbo].[AnswersCount] AS AC WHERE AC.QueryId={0}", QueryId);
+        String queryans = String.Format("SELECT * FROM [dbo].[AnswersCount] AS AC WHERE AC.QueryId={0}", QueryId);
 
-       con.Open();
-       SqlCommand cmd3 = new SqlCommand(queryans, con);
-       SqlDataReader dr3 = cmd2.ExecuteReader();
-       CounterView.DataSource = dr3;
-       CounterView.DataBind();
-       con.Close();
+        con.Open();
+        SqlCommand cmd3 = new SqlCommand(queryans, con);
+        SqlDataReader dr3 = cmd2.ExecuteReader();
+        CounterView.DataSource = dr3;
+        CounterView.DataBind();
+        con.Close();
     }
+
+
 
     protected void BtnAnswerSubmit_Click(object sender, EventArgs e)
     {
-        
+
         object userid = Session["UserId"];
         if (userid != null)
         {
             string q = txtAnswer.Text.Replace("'", "''"); //apostrophe problem fixed
-            if (q.Contains("sex") || q.Contains("seks") || q.Contains("prezervatif") || q.Contains("condom") || q.Contains("kondom") || q.Contains(" am ") || q.Contains(" amcik ") || q.Contains(" sik ") || q.Contains(" amina ") || q.Contains(" amına ") || q.Contains("amk") || q.Contains("veled-i zina") || q.Contains("orospu") || q.Contains("yavsak") || q.Contains("yavşak") || q.Contains("ibne") || q.Contains("göt") || q.Contains("fuck"))
+            if (q.Contains("sex") || q.Contains("seks") || q.Contains("prezervatif") || q.Contains("yarrak") || q.Contains("malafat") || q.Contains("pezevenk") || q.Contains("sikis") || q.Contains("sikiş") || q.Contains("condom") || q.Contains("kondom") || q.Contains(" am ") || q.Contains(" amcik ") || q.Contains(" sik ") || q.Contains(" amina ") || q.Contains(" amına ") || q.Contains("amk") || q.Contains("Amk") || q.Contains("veled-i zina") || q.Contains("orospu") || q.Contains("yavsak") || q.Contains("yavşak") || q.Contains("ibne") || q.Contains("göt") || q.Contains("fuck") || q.Contains("siktir"))
             {
                 lblLoginError.Text = "So nasty, but not for this environment.";
                 Panel1.Visible = true;
@@ -170,6 +183,6 @@ public partial class Answers : System.Web.UI.Page
 
             Page.Response.Redirect(Page.Request.Url.ToString(), true);
         }
-     
+
     }
 }

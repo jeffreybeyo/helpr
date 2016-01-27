@@ -19,6 +19,11 @@
                 <asp:TextBox runat="server" ID="Username" CssClass="form-control" />
                 <asp:RequiredFieldValidator runat="server" ControlToValidate="Username"
                     CssClass="text-danger" ErrorMessage="The username field is required." />
+                <br />
+                <asp:RegularExpressionValidator runat="server" CssClass="text-danger" ControlToValidate="Username" Display ="Dynamic" ErrorMessage="Spaces are not allowed!" ValidationExpression="[^\s]+"/>
+                <br />
+                <asp:RequiredFieldValidator runat="server" CssClass="text-danger" Display ="Dynamic" ControlToValidate="Username" ErrorMessage="Value can't be empty" />
+                <br />
             </div>
         </div>
 
@@ -26,9 +31,8 @@
             <asp:Label runat="server" AssociatedControlID="Email" CssClass="col-md-2 control-label">Email</asp:Label>
             <div class="col-md-10">
                 <asp:TextBox runat="server" ID="Email" CssClass="form-control" />
-                <asp:RequiredFieldValidator runat="server" ControlToValidate="Email"
-                    CssClass="text-danger" ErrorMessage="Email field is required." />
-                <br />
+                <asp:RequiredFieldValidator runat="server" ControlToValidate="Email" CssClass="text-danger" ErrorMessage="Email field is required." />
+                <br />                
                 <asp:RegularExpressionValidator runat="server" CssClass="text-danger" ControlToValidate = "Email" Display ="Dynamic" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"
     ErrorMessage="Please enter valid email address. Eg. Something@domain.com"></asp:RegularExpressionValidator>
             </div>

@@ -16,25 +16,25 @@ ORDER BY Q.RegDate DESC"></asp:SqlDataSource>
 <!--ADD QUERY -->
     <div class="alert alert-warning text-center" role="alert">
         
-<div class="row">
+<div class="row your-class">
   <div class="col-lg-4">
     <div class="input-group input-group-lg">
-       <span class="input-group-addon" id="sizing-addon1"  aria-label="Query">Query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+       <span class="input-group-addon" id="sizing-addon1" aria-label="Query">Query&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
       <asp:TextBox ID="AddQuerytxt" class="form-control" placeholder="So...?" runat="server"></asp:TextBox>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-4 -->
 
   <div class="col-lg-4">
     <div class="input-group input-group-lg">
-       <span class="input-group-addon" id="sizing-addon3">Category&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+       <span class="input-group-addon" id="sizing-addon3">Category</span>
         <asp:DropDownList ID="ddlCategory" CssClass="form-control" runat="server" DataSourceID="ListCategorySql" DataTextField="Name" DataValueField="Id"></asp:DropDownList>
     </div><!-- /input-group -->
   </div><!-- /.col-lg-4 -->
 
       <div class="col-lg-4">
     <div class="input-group input-group-lg">
-      <span class="input-group-addon" id="sizing-addon4">Your Hashtag</span>
-        <asp:TextBox ID="AddHashtagtxt" class="form-control" placeholder="oneword" runat="server"></asp:TextBox>
+      <span class="input-group-addon" id="sizing-addon4">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+        <asp:TextBox ID="AddHashtagtxt" class="form-control" placeholder="hashtag" runat="server"></asp:TextBox>
     </div><!-- /input-group -->  
   </div><!-- /.col-lg-4 -->
 
@@ -53,20 +53,29 @@ ORDER BY Q.RegDate DESC"></asp:SqlDataSource>
 <!--LIST QUERIES -->
 <div class="row">
     <asp:ListView id="QueryList" runat="server">
-        <ItemTemplate>
-            <div class="col-sm-4">
-                <asp:HyperLink ID="HyperLink" runat="server" class="thumbnail" NavigateUrl='<%# FormatUrl( (int) Eval("Id")) %>'>
-                       <p><span class="label label-warning"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<asp:Label ID="QueryUserlbl" runat="server" Text='<%#Eval("Username")%>'></asp:Label></span>
-                          <span class="label label-info"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>&nbsp;<asp:Label ID="Counterlbl" runat="server" Text='<%#Eval("Counter")%>'></asp:Label></span>
-                          <span class="label label-success"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;<asp:Label ID="Categorylbl" runat="server" Text='<%#Eval("Name")%>'></asp:Label></span>
-                       </p>
-                    <h3><asp:Label ID="QueryTextlbl" runat="server" Text='<%#Eval("Text") %>'></asp:Label></h3>
-                    <div>
+    <ItemTemplate>
+        <section class="col-md-4 your-class">
+            <div class="quote">
+              <div>
+                <!--<img src="img/matt-berninger.jpg" class="quote-face" />-->
+                <blockquote>
+                  <p>
+                      <span class="label label-warning"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<asp:Label ID="QueryUserlbl" runat="server" Text='<%#Eval("Username")%>'></asp:Label></span>
+                      <span class="label label-info"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>&nbsp;<asp:Label ID="Counterlbl" runat="server" Text='<%#Eval("Counter")%>'></asp:Label></span>
+                      <span class="label label-success"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;<asp:Label ID="Categorylbl" runat="server" Text='<%#Eval("Name")%>'></asp:Label></span>
+                      
                     <%--<p><asp:Label ID="Date" runat="server" Text='<%#Eval("RegDate")%>'></asp:Label>--%>
-                    <p align="right"><%--<span class="pull-right">--%>#<asp:Label ID="Hashtag" runat="server" Text='<%#Eval("Hashtag")%>'></asp:Label><%--</span>--%></p>
-                    </div>
-                </asp:HyperLink>
-            </div>
+                    
+                    <div class="text-center">
+                      <a href='<%# FormatUrl( (int) Eval("Id")) %>' role="button"><h3><asp:Label ID="QueryTextlbl" runat="server" Text='<%#Eval("Text") %>'></asp:Label></h3></a>
+                  </div>
+                      <p class="pull-right"><small>#<asp:Label ID="Hashtag" runat="server" Text='<%#Eval("Hashtag")%>'></asp:Label></small></p>
+                   </p>
+                </blockquote>
+              </div>
+            </div><hr />
+          </section>
+        
          </ItemTemplate>
     </asp:ListView>
 </div>

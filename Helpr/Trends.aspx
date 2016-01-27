@@ -2,74 +2,85 @@
 
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
 
-    <div class="row">
+<div id="wrapper">
 
-            <!--left side-->
-            <div class="col-lg-6">
-                <div class="panel panel-warning">
-                <div class="panel-heading"><center><h3>Most Used Hashtags</h3></center></div>
-                <div class="panel-body">
-                <div class="row">
-                    <ul class="list-group">
-                    <asp:ListView id="HashtagList" runat="server">
+        <!-- Sidebar -->
+        <div id="sidebar-wrapper">
+            <ul class="sidebar-nav">
+                <li class="sidebar-brand">
+                    <center><a href="#"># Trend Hashtags</a></center>
+                </li>
+               <asp:ListView id="HashtagList" runat="server">
                         <ItemTemplate>
-                            <asp:HyperLink ID="HyperLink" runat="server" class="thumbnail"><li class="list-group-item"><span class="badge"> <asp:Label ID="HCounter" runat="server" Text='<%#Eval("HCounter")%>'></asp:Label> </span> 
-                                  #<asp:Label ID="Hashtag" runat="server" Text='<%#Eval("Hashtag")%>'></asp:Label>
+                            <li class="list-group-item"><asp:LinkButton ID="aGetHashtags" CausesValidation="False"  OnClick="hashtag_click" runat="server">#<asp:Label ID="Hashtag" runat="server" Text='<%#Eval("Hashtag")%>'></asp:Label>
+                                <span class="badge pull-right"><asp:Label ID="HCounter" runat="server" Text='<%#Eval("HCounter")%>'></asp:Label> </span></asp:LinkButton>
                                  </li>
-                            </asp:HyperLink>
                         </ItemTemplate>  
                      </asp:ListView>
-                     </ul>
-                  </div>
-                </div>
-               </div>
+             
+                <li class="sidebar-brand">
+                    <a href="#"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;Trend Categories</a>
+                </li>
 
-   <%--             <div class="panel panel-warning">
-                <div class="panel-heading"><center><h3>Popular Categories</h3></center></div>
-                <div class="panel-body">
+                <asp:ListView id="CategoryList" runat="server">
+                <ItemTemplate>
+                <li class="list-group-item">
+                <span class="label label-success"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;<asp:Label ID="Category" runat="server" Text='<%#Eval("Name")%>'></asp:Label></span>
+                </li>
+                </ItemTemplate>  
+                </asp:ListView>
+            </ul>
+        </div>
+        <!-- /#sidebar-wrapper -->
+    <br />
+    <a href="#menu-toggle" class="btn btn-warning" id="menu-toggle"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
+    <br /><br />
+    <h2><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>&nbsp;Hot Queries</h2>
+        <!-- Page Content -->
+            <div class="container-fluid">
                 <div class="row">
-                            <ul class="list-group">
-                    <asp:ListView id="CategoryList" runat="server">
-                        <ItemTemplate>
-                            <asp:HyperLink ID="HyperLink" runat="server" class="thumbnail"><li class="list-group-item"><span class="badge"> <asp:Label ID="HCounter" runat="server" Text='<%#Eval("CCount")%>'></asp:Label> </span> 
-                                  <span class="label label-success"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;<asp:Label ID="Category" runat="server" Text='<%#Eval("Name")%>'></asp:Label></span>
-                                 </li>
-                            </asp:HyperLink>
-                        </ItemTemplate>  
-                     </asp:ListView>
-                    </ul>
-                  </div>
-                </div>
-               </div>--%>
+                        <div class="row">
+                            <asp:ListView id="PopularQList" runat="server">
+                                <ItemTemplate>
 
-                </div>
-                
-            <!--right side-->
-             <div class="col-lg-6">
-                <div class="panel panel-warning">
-                <div class="panel-heading"><center><h3>Popular Queries</h3></center></div>
-                <div class="panel-body">
-                <div class="row">
-                    <asp:ListView id="PopularQList" runat="server">
-                        <ItemTemplate>
-                             <div class="col-sm-12">
-                               <asp:HyperLink ID="HyperLink" runat="server" class="thumbnail" NavigateUrl='<%# FormatUrl( (int) Eval("Id")) %>'>
-                                 <p><span class="label label-warning"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<asp:Label ID="QueryUserlbl" runat="server" Text='<%#Eval("Username")%>'></asp:Label></span>
-                                    <span class="label label-info"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>&nbsp;<asp:Label ID="Counterlbl" runat="server" Text='<%#Eval("AnswerCount")%>'></asp:Label></span>
-                                    <span class="label label-success"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;<asp:Label ID="Categorylbl" runat="server" Text='<%#Eval("Name")%>'></asp:Label></span>
-                                 </p>
-                      <h3><asp:Label ID="QueryTextlbl" runat="server" Text='<%#Eval("Text") %>'></asp:Label></h3>
-                    <p class="text-right">#<asp:Label ID="Hashtag" runat="server" Text='<%#Eval("Hashtag")%>'></asp:Label></p>
-                </asp:HyperLink>
-            </div>
+            <section class="col-md-12 your-class">
+            <div class="quote">
+              <div>
+                <!--<img src="img/matt-berninger.jpg" class="quote-face" />-->
+                <blockquote>
+                  <p>
+                      <span class="label label-warning"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<asp:Label ID="Label1" runat="server" Text='<%#Eval("Username")%>'></asp:Label></span>
+                      <span class="label label-info"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>&nbsp;<asp:Label ID="Label2" runat="server" Text='<%#Eval("AnswerCount")%>'></asp:Label></span>
+                      <span class="label label-success"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;<asp:Label ID="Label3" runat="server" Text='<%#Eval("Name")%>'></asp:Label></span>
+                      
+                    <%--<p><asp:Label ID="Date" runat="server" Text='<%#Eval("RegDate")%>'></asp:Label>--%>
+                    
+                    <div class="text-left">
+                      <a href='<%# FormatUrl( (int) Eval("Id")) %>' role="button"><h3><asp:Label ID="Label4" runat="server" Text='<%#Eval("Text") %>'></asp:Label></h3></a>
+                  </div>
+                      <p class="pull-right"><small>#<asp:Label ID="Label5" runat="server" Text='<%#Eval("Hashtag")%>'></asp:Label></small></p>
+                   </p>
+                </blockquote>
+              </div>
+            </div><hr />
+          </section>
          </ItemTemplate>
     </asp:ListView>
                   </div>
-                </div>
-               </div>
-                </div>
-                
+                    </div>
+            </div>
+        <!-- /#page-content-wrapper -->
 
-        
     </div>
+    <!-- /#wrapper -->
+
+    <!-- Menu Toggle Script -->
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+
 </asp:Content>

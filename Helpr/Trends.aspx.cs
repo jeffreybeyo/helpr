@@ -14,12 +14,12 @@ public partial class Trends : System.Web.UI.Page
     {
         GetTrendHashtags();
         GetPopularQueries();
-        //GetPopularCategories();
+        GetPopularCategories();
     }
 
     private void GetTrendHashtags()
     {
-        String query = "SELECT  TOP 3 Q.Hashtag, COUNT(Q.Hashtag) AS HCounter, COUNT(FU.QueryId) AS FUCounter FROM [dbo].[Queries] AS Q LEFT JOIN [dbo].[FollowUp] FU ON FU.QueryId=Q.Id GROUP BY Q.Hashtag ORDER BY HCounter DESC, FUCounter DESC";
+        String query = "SELECT  TOP 4 Q.Hashtag, COUNT(Q.Hashtag) AS HCounter, COUNT(FU.QueryId) AS FUCounter FROM [dbo].[Queries] AS Q LEFT JOIN [dbo].[FollowUp] FU ON FU.QueryId=Q.Id WHERE Q.Hashtag!='' GROUP BY Q.Hashtag ORDER BY HCounter DESC, FUCounter DESC";
         SqlCommand cmd = new SqlCommand(query, con);
         con.Open();
         SqlDataReader dr = cmd.ExecuteReader();
@@ -29,25 +29,38 @@ public partial class Trends : System.Web.UI.Page
         con.Close();
     }
 
-    //private void GetPopularCategories()
-    //{
-    //    String query = "SELECT TOP 3 COUNT(C.Id) AS CCount, C.Name FROM [dbo].[Categories] AS C INNER JOIN [dbo].[Queries] Q ON Q.CategoryId=C.Id GROUP BY C.Name ORDER BY CCount DESC";
-    //    SqlCommand cmd = new SqlCommand(query, con);
-    //    con.Open();
-    //    SqlDataReader dr = cmd.ExecuteReader();
-
-    //    CategoryList.DataSource = dr;
-    //    CategoryList.DataBind();
-    //    con.Close();
-    //}
-
-    private void GetPopularQueries()
+    private void GetPopularCategories()
     {
-        String query = "SELECT TOP 4 Q.Id,Q.Text,Q.Hashtag,C.Name,U.Username,Q.RegDate, AC.Counter AS AnswerCount, FUC.FUCount AS FollowUpCount FROM [dbo].[Queries] AS Q LEFT JOIN [dbo].[Users] U ON Q.UserId=U.Id LEFT JOIN [dbo].[Categories] C ON C.Id=Q.CategoryId LEFT JOIN [dbo].[AnswersCount] AC ON Q.Id=AC.QueryId LEFT JOIN [dbo].[FollowUpCount] FUc ON FUC.QueryId=Q.Id ORDER BY AC.Counter DESC, FUC.FUCount DESC";
+        String query = "SELECT TOP 4 COUNT(C.Id) AS CCount, C.Name FROM [dbo].[Categories] AS C INNER JOIN [dbo].[Queries] Q ON Q.CategoryId=C.Id GROUP BY C.Name ORDER BY CCount DESC";
         SqlCommand cmd = new SqlCommand(query, con);
         con.Open();
         SqlDataReader dr = cmd.ExecuteReader();
 
+        CategoryList.DataSource = dr;
+        CategoryList.DataBind();
+        con.Close();
+    }
+
+    private void GetPopularQueries()
+    {
+        String query = "SELECT TOP 10 Q.Id,Q.Text,Q.Hashtag,C.Name,U.Username,Q.RegDate, AC.Counter AS AnswerCount, FUC.FUCount AS FollowUpCount FROM [dbo].[Queries] AS Q LEFT JOIN [dbo].[Users] U ON Q.UserId=U.Id LEFT JOIN [dbo].[Categories] C ON C.Id=Q.CategoryId LEFT JOIN [dbo].[AnswersCount] AC ON Q.Id=AC.QueryId LEFT JOIN [dbo].[FollowUpCount] FUc ON FUC.QueryId=Q.Id ORDER BY AC.Counter DESC, FUC.FUCount DESC";
+        SqlCommand cmd = new SqlCommand(query, con);
+        con.Open();
+        SqlDataReader dr = cmd.ExecuteReader();
+
+        PopularQList.DataSource = dr;
+        PopularQList.DataBind();
+        con.Close();
+    }
+
+    protected void hashtag_click(object sender, EventArgs e)
+    {
+        String query = "SELECT Q.Text, Q.Id Q.Hashtag, C.Name, U.Username, AC.Counter AS AnswerCount FROM [dbo].[Queries] AS Q  INNER JOIN [dbo].[Users] U ON U.Id=Q.UserId INNER JOIN [dbo].[Categories] C ON C.Id=Q.CategoryId INNER JOIN [dbo].[AnswersCount] AC ON AC.QueryId=Q.Id WHERE Q.Hashtag=@hashtag";
+        SqlCommand cmd = new SqlCommand(query, con);
+        cmd.Parameters.AddWithValue("@hashtag", "cokaciz");
+        con.Open();
+        SqlDataReader dr = cmd.ExecuteReader();
+        
         PopularQList.DataSource = dr;
         PopularQList.DataBind();
         con.Close();

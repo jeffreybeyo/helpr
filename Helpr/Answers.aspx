@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Answers" Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"  CodeFile="Answers.aspx.cs" Inherits="Answers" %>
+﻿<%@ Page Language="C#" MasterPageFile="~/Site.Master" AutoEventWireup="true"  CodeFile="Answers.aspx.cs" Inherits="Answers" %>
 <asp:Content ID="BodyContent" ContentPlaceHolderID="MainContent" runat="server">
     <asp:Panel ID="Panel1" Visible="false" runat="server" class="alert alert-danger" role="alert"><asp:Label ID="lblLoginError" runat="server" Text=""></asp:Label></asp:Panel> 
 
@@ -33,13 +33,12 @@
         </asp:ListView>
     <asp:TextBox ID="txtAnswer" runat="server" class="form-control" placeholder="Share your opinion" aria-describedby="sizing-addon1"></asp:TextBox>
     <asp:Button ID="BtnAddAnswer" class="btn btn-default btn-lg" runat="server" Text="Go!"  OnClick="BtnAnswerSubmit_Click" />
-        
+       <br /> <div class="fb-share-button" data-href="<%#Request.Url.Host%>" data-layout="button_count"></div>
 </div>
 
               <center><b><asp:RequiredFieldValidator ID="RfvAnswer" runat="server" Display="Dynamic" ErrorMessage="<span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span> Please fill all the inputs" ControlToValidate="txtAnswer"></asp:RequiredFieldValidator></b></center>
 </div>
 
-    <%--<div class="fb-share-button" data-href="<%#Request.Url.Host%>" data-layout="icon_link"></div>--%>
 
 <asp:ListView id="AnswersList" runat="server">
         <ItemTemplate>

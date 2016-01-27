@@ -78,8 +78,8 @@ public partial class SiteMaster : MasterPage
             LoginName.Text = Session["Username"].ToString();
             ausername.Visible = true;
             alogout.Visible = true;
-            aprofile.Visible = true;
             afollowups.Visible = true;
+            settings.Visible = true;
 
             //check followup count
             String query = "SELECT COUNT(FU.Id) AS FUCount, U.Id FROM [dbo].[FollowUp] AS FU RIGHT JOIN [dbo].[Users] U ON U.Id=FU.UserId WHERE U.Id=@userid GROUP BY U.Id";
@@ -98,8 +98,8 @@ public partial class SiteMaster : MasterPage
             aregister.Visible = true;
             ausername.Visible = false;
             alogout.Visible = false;
-            aprofile.Visible = false;
             afollowups.Visible = false;
+            settings.Visible = false;
         }
     }
 

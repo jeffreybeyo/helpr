@@ -9,22 +9,22 @@
     <asp:ListView id="FollowList" runat="server">
         <ItemTemplate>
             
-            <ul class="media-list">
-            <li class="media">
-                <div class="media-left">
+        <section class="col-md-12 your-class">
+            <div class="quote">
+                <!--<img src="img/matt-berninger.jpg" class="quote-face" />-->
+                <blockquote>
+                  <p>                      
+                    <%--<p><asp:Label ID="Date" runat="server" Text='<%#Eval("RegDate")%>'></asp:Label>--%>
                     
-                </div>
-                <asp:HyperLink ID="HyperLink" runat="server" class="thumbnail" role="alert" NavigateUrl='<%# FormatUrl( (int) Eval("QueryId")) %>'>
-
-                <div class="media-body">
-                <h4 class="media-heading"><asp:Label ID="QueryTextlbl" runat="server" Text='<%#Eval("Text") %>'></asp:Label></h4>
-                <span class="label label-warning"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<asp:Label ID="QueryUserlbl" runat="server" Text='<%#Eval("QSender")%>'></asp:Label></span>
-                 
-                <span class="label label-success"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;<asp:Label ID="Categorylbl" runat="server" Text='<%#Eval("CName")%>'></asp:Label></span>
-                </div>
-                </asp:HyperLink>
-            </li>
-            </ul>
+                    <div class="text-left">
+                      <a href='<%# FormatUrl( (int) Eval("QueryId")) %>' role="button"><h4><asp:Label ID="QueryTextlbl" runat="server" Text='<%#Eval("Text") %>'></asp:Label></h4></a>
+                  </div>
+                       <span class="label label-warning"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<asp:Label ID="QueryUserlbl" runat="server" Text='<%#Eval("QSender")%>'></asp:Label></span>
+                      <span class="label label-success"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;<asp:Label ID="Categorylbl" runat="server" Text='<%#Eval("CName")%>'></asp:Label></span>
+                   </p>
+                </blockquote>
+            </div><hr />
+          </section>
             
          </ItemTemplate>
     </asp:ListView>

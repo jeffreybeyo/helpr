@@ -41,7 +41,7 @@ public partial class _Default : Page
                 string q = AddQuerytxt.Text.Replace("'", "''"); 
                 
                 //avoid bad words
-                if (q.Contains("sex") || q.Contains("seks") || q.Contains("prezervatif") || q.Contains("condom") || q.Contains("kondom") || q.Contains(" am ") || q.Contains(" amcik ") || q.Contains(" sik ") || q.Contains(" amina ") || q.Contains(" amına ") || q.Contains("amk") || q.Contains("veled-i zina") || q.Contains("orospu") || q.Contains("yavsak") || q.Contains("yavşak") || q.Contains("ibne") || q.Contains("göt") || q.Contains("fuck"))
+                if (q.Contains("sex") || q.Contains("seks") || q.Contains("prezervatif") || q.Contains("yarrak") || q.Contains("malafat") || q.Contains("pezevenk") || q.Contains("sikis") || q.Contains("sikiş") || q.Contains("condom") || q.Contains("kondom") || q.Contains(" am ") || q.Contains(" amcik ") || q.Contains(" sik ") || q.Contains(" amina ") || q.Contains(" amına ") || q.Contains("amk") || q.Contains("Amk") || q.Contains("veled-i zina") || q.Contains("orospu") || q.Contains("yavsak") || q.Contains("yavşak") || q.Contains("ibne") || q.Contains("göt") || q.Contains("fuck") || q.Contains("siktir"))
                 {
                     lblLoginError.Text = "So nasty, but not for this environment.";
                     Panel1.Visible = true;
