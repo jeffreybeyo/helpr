@@ -34,12 +34,22 @@ public partial class Login : System.Web.UI.Page
             Session.Add("UserId", dr["Id"]);
             Session.Add("Username", dr["Username"].ToString());
             con.Close();
+
+            //set cookies
+            Response.Cookies["userName"].Value = usernamestr;
+            Response.Cookies["userName"].Expires = DateTime.Now.AddDays(1);
+
+            HttpCookie aCookie = new HttpCookie("lastVisit");
+            aCookie.Value = DateTime.Now.ToString();
+            aCookie.Expires = DateTime.Now.AddDays(5);
+            Response.Cookies.Add(aCookie);
+
             Response.Redirect("Default.aspx", true);
         }
         else
         {
             Panel1.Visible = true;
-            lblLoginError.Text = "Username or password is not correct";
+            lblLoginError.Text = "Kullanıcı adı veya şifre yanlış.";
         }
         
     }

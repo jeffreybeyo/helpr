@@ -14,10 +14,11 @@
     <webopt:bundlereference runat="server" path="~/Content/css" />
     <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon" />
     <link href="Content/simple-sidebar.css" rel="stylesheet">
-    <meta name="description" content="Welcome to Soralet. Ask what you are wondering to the audience. Get answers. Follow up popular queries. Satisfy your curiosity">
-    <meta name="keywords" content="soralet, ask, question, soru, sor, cevap, merak, merak ediyorum, ilişkiler, iş, etkinlikler, duyuru, seyahat, spor, teknoloji">
-
-
+    <meta name="description" content="Soralet ailesine hoş geldin! Soralet Türkiye'de yaşayanların deneyim ve meraklarını paylaşabileceği, yeni insanlarla tanışabileceği eğlenceli bir paylaşım platformudur.">
+    <meta name="keywords" content="soralet, soru, sor, cevap, merak, merak ediyorum, ilişkiler, iş, etkinlikler, duyuru, seyahat, spor, teknoloji, ask, question">
+    <meta name="msvalidate.01" content="D3772B9E851356A156753A9F22F68955" />
+    <meta property="og:image" content="http://www.soralet.com/images/2016-01-24.png"/>
+    <link rel="image_src" href="http://www.soralet.com/images/2016-01-24.png"/>
 </head>
 <body>
     <div id="fb-root"></div>
@@ -81,28 +82,40 @@
                         <span class="icon-bar"></span>
                     </button>
                     <a class="navbar-brand" runat="server" href="~/"><b><span style="font-size:1em;" class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>Soralet</b></a>
-<%--                    <p class="navbar-text"><i>"Satisfy Your Curiosity"</i></p>--%>
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav">
-                        <li><a runat="server" href="~/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;Newsfeed</a></li>
-                        <li><a runat="server" href="~/Trends"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>&nbsp;Trend</a></li>
-                        <li><a runat="server" ID="afollowups" visible="false" href="~/FollowUps"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;Follow Ups <span class="badge"><asp:Label ID="FUCountlbl" runat="server"></asp:Label> </span> </a></li>
+                        <li><a runat="server" href="~/"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>&nbsp;Akış</a></li>
+                        <li><a runat="server" href="~/Trends"><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>&nbsp;Popüler</a></li>
+                        <li><a runat="server" ID="afollowups" visible="false" href="~/FollowUps"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp;Takiplerim <span class="badge"><asp:Label ID="FUCountlbl" runat="server"></asp:Label> </span> </a></li>
                     </ul>
+                    <!-- SEARCH BOX -->
+                    <div class="col-sm-3 col-md-3">
+                    <div class="navbar-form" role="search">
+                    
+                    <asp:TextBox ID="Searchboxtxt" class="form-control" CausesValidation="false" placeholder="Arama" runat="server"></asp:TextBox>
+                    
+                    <asp:LinkButton ID="SearchButton" CausesValidation="False"  OnClick="search_click" runat="server"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></asp:LinkButton>
+                    
+                    
+                    </div>  
+                    </div>
+                    <asp:RequiredFieldValidator ID="rfvtxt" runat="server" ControlToValidate="Searchboxtxt"
+                    ErrorMessage="Arama boş olamaz." Display="Dynamic"></asp:RequiredFieldValidator>
+                    <asp:Label ID="Label1" runat="server"></asp:Label>
                                 
                             <ul class="nav navbar-nav navbar-right">
-                             
-                                <li><a id="aregister" runat="server" href="~/Register">Register</a></li>
-                                <li><a id="alogin" runat="server" href="~/Login">Log in</a></li>
+                                <li><a id="aregister" runat="server" href="~/Register">Kayıt Ol</a></li>
+                                <li><a id="alogin" runat="server" href="~/Login">Giriş Yap</a></li>
                                 <li><a id="ausername" runat="server" href="~/UProfile"><b><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<asp:Label ID="LoginName" runat="server" Text=""></asp:Label></b></a></li>
 
                                 <li class="dropdown">
-                               <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" id="settings" visible="false" runat="server">Settings<span class="caret"></span></a>
+                               <a href="#" class="dropdown-toggle" aria-haspopup="true" aria-expanded="false" data-toggle="dropdown" id="settings" visible="false" runat="server">Ayarlar<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                 <li role="separator" class="divider"></li>
                                 <li><a id="adisce" runat="server" href="~/Answers?QueryId=71"><span class="glyphicon glyphicon-education" aria-hidden="true"></span> &nbsp;"aut disce, aut discede"</a></li>
                                 <li role="separator" class="divider"></li>
-                                <li><asp:LinkButton ID="alogout" visible="false" CausesValidation="False"  OnClick="logout_click" runat="server"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> &nbsp;Logout</asp:LinkButton></li>
+                                <li><asp:LinkButton ID="alogout" visible="false" CausesValidation="False"  OnClick="logout_click" runat="server"><span class="glyphicon glyphicon-log-out" aria-hidden="true"></span> &nbsp;Çıkış</asp:LinkButton></li>
                                 
                                 
                                 
@@ -118,7 +131,7 @@
             </asp:ContentPlaceHolder>
             <hr />
             <footer>
-                <p>&copy; <%: DateTime.Now.Year %> - Soralet</p>
+                <%--<p>&copy; <%: DateTime.Now.Year %> - Soralet</p>--%>
             </footer>
         </div>
     </form>

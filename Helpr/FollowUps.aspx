@@ -4,7 +4,7 @@
      <asp:Panel ID="Panel1" Visible="false" runat="server" class="alert alert-danger" role="alert"><asp:Label ID="lblLoginError" runat="server" Text=""></asp:Label></asp:Panel> 
 <br />
 <div class="row">
-    <span class="label label-danger"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span>Last Flagged</span>
+    <span class="label label-danger"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span>&nbsp; Son Takiplerim</span>
                         
     <asp:ListView id="FollowList" runat="server">
         <ItemTemplate>

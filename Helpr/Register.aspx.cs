@@ -44,6 +44,7 @@ public partial class Register : System.Web.UI.Page
         con.Open();
         cmd.ExecuteNonQuery();
         con.Close();
+        Page.Response.Redirect("Login.aspx", true);
          
     }
 }

@@ -13,7 +13,10 @@ public partial class _Default : Page
     SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["HelperConnectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
-        GetQueries();
+        if (!Page.IsPostBack)
+        {
+            GetQueries();
+        }
     }
 
 
@@ -43,7 +46,7 @@ public partial class _Default : Page
                 //avoid bad words
                 if (q.Contains("sex") || q.Contains("seks") || q.Contains("prezervatif") || q.Contains("yarrak") || q.Contains("malafat") || q.Contains("pezevenk") || q.Contains("sikis") || q.Contains("sikiş") || q.Contains("condom") || q.Contains("kondom") || q.Contains(" am ") || q.Contains(" amcik ") || q.Contains(" sik ") || q.Contains(" amina ") || q.Contains(" amına ") || q.Contains("amk") || q.Contains("Amk") || q.Contains("veled-i zina") || q.Contains("orospu") || q.Contains("yavsak") || q.Contains("yavşak") || q.Contains("ibne") || q.Contains("göt") || q.Contains("fuck") || q.Contains("siktir"))
                 {
-                    lblLoginError.Text = "So nasty, but not for this environment.";
+                    lblLoginError.Text = "Çok ilginç... Ama buraya uygun değil.";
                     Panel1.Visible = true;
                 }
 
@@ -62,7 +65,7 @@ public partial class _Default : Page
 
             else
             {
-                lblLoginError.Text = "You must Log In or Sign Up to add a question.";
+                lblLoginError.Text = "Soru sormak için Giriş Yap veya Kayıt Ol.";
                 Panel1.Visible = true;
             }
     }
@@ -70,6 +73,12 @@ public partial class _Default : Page
     protected string FormatUrl(int Id) 
     { 
         return "Answers.aspx?QueryId=" + Id;
+
+    }
+
+    protected string FormatUrlUser(int Id)
+    {
+        return "OProfile.aspx?UserId=" + Id;
 
     }
 

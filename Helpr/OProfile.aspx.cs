@@ -7,47 +7,42 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-public partial class UProfile : System.Web.UI.Page
+public partial class OProfile : System.Web.UI.Page
 {
     SqlConnection con = new SqlConnection(ConfigurationManager.ConnectionStrings["HelperConnectionString"].ConnectionString);
     protected void Page_Load(object sender, EventArgs e)
     {
-        object userid = Session["UserId"];
-        if (userid != null)
+        int userid = -1;
+
+        if (Request.Params["UserId"] != null && int.TryParse(Request.Params["UserId"], out userid))
         {
-            GetUserProfile();
+            GetUserProfile(userid);
             GetUserQueries(userid);
             GetUserAnswers(userid);
-            GetUserCounts();
+            GetUserCounts(userid);
         }
 
         else
         {
-            lblLoginError.Text = "Bu sayfayı görüntülemek için Giriş Yap veya Kayıt Ol.";
-            Panel1.Visible = true;
+            lblError.Text = "Aradığınız kullanıcı hesabını silmiş olabilir... ";
+            PanelError.Visible = true;
         }
-        
     }
 
-    private void GetUserProfile()
+    private void GetUserProfile(int userid)
     {
-        object userid = Session["UserId"];
-        if (userid != null)
-        {
+       
             String query = "SELECT U.Username FROM [dbo].[Users] AS U WHERE U.Id=@userid";
             SqlCommand cmd = new SqlCommand(query, con);
             cmd.Parameters.AddWithValue("@userid", userid);
             con.Open();
             lblUsername.Text = cmd.ExecuteScalar().ToString();
+            Page.Title = lblUsername.Text;
             con.Close();
-        }
     }
 
-        private void GetUserCounts()
+        private void GetUserCounts(int userid)
     {
-        object userid = Session["UserId"];
-        if (userid != null)
-        {
             //check user query count
             String query = "SELECT COUNT(Q.Id) AS UQueryCount FROM [dbo].[Queries] AS Q WHERE Q.UserId=@userid";
             con.Open();
@@ -63,7 +58,6 @@ public partial class UProfile : System.Web.UI.Page
             cmd2.Parameters.AddWithValue("@userid", userid);
             UAnswerCount.Text = cmd2.ExecuteScalar().ToString();
             con.Close();
-        }
     }
 
 
@@ -107,59 +101,6 @@ public partial class UProfile : System.Web.UI.Page
             lblemptyanswer.Visible = true;
         }
         con.Close();
-    }
-
-    protected void DeleteQuery_Click(object sender, EventArgs e)
-    {
-        LinkButton btnRemoveQuery = (LinkButton)sender;
-        int queryid = Convert.ToInt32(btnRemoveQuery.CommandArgument.ToString());
-
-        object userid = Session["UserId"];
-        if (userid != null)
-        {
-            String query = "DELETE FROM [dbo].[Queries] WHERE UserId=@userid AND Id=@queryid";
-            SqlCommand cmd = new SqlCommand(query, con);
-            cmd.Parameters.AddWithValue("@userid", userid);
-            cmd.Parameters.AddWithValue("@queryid", queryid);
-            con.Open();
-            cmd.ExecuteNonQuery();
-            con.Close();
-            con.Dispose();
-
-            Page.Response.Redirect(Page.Request.Url.ToString(), true);
-        }
-
-        else
-        {
-            lblLoginError.Text = "Güvenlik sebebiyle oturumunuz sona erdi. Bu içeriği silmek için Giriş Yap veya Kayıt Ol.";
-        }
-    }
-
-
-    protected void DeleteAnswer_Click(object sender, EventArgs e)
-    {
-        LinkButton btnRemoveAnswer = (LinkButton)sender;
-        int queryid = Convert.ToInt32(btnRemoveAnswer.CommandArgument.ToString());
-
-        object userid = Session["UserId"];
-        if (userid != null)
-        {
-            String query = "DELETE FROM [dbo].[Answers] WHERE UserId=@userid AND QueryId=@queryid";
-            SqlCommand cmd = new SqlCommand(query, con);
-            cmd.Parameters.AddWithValue("@userid", userid);
-            cmd.Parameters.AddWithValue("@queryid", queryid);
-            con.Open();
-            cmd.ExecuteNonQuery();
-            con.Close();
-            con.Dispose();
-
-            Page.Response.Redirect(Page.Request.Url.ToString(), true);
-        }
-
-        else
-        {
-            lblLoginError.Text = "Güvenlik sebebiyle oturumunuz sona erdi. Bu içeriği silmek için Giriş Yap veya Kayıt Ol.";
-        }
     }
 
     

@@ -8,24 +8,24 @@
         <div id="sidebar-wrapper">
             <ul class="sidebar-nav">
                 <li class="sidebar-brand">
-                    <center><a href="#"># Trend Hashtags</a></center>
+                    <center><a href="#"># Popüler Etiketler</a></center>
                 </li>
                <asp:ListView id="HashtagList" runat="server">
                         <ItemTemplate>
-                            <li class="list-group-item"><asp:LinkButton ID="aGetHashtags" CausesValidation="False"  OnClick="hashtag_click" runat="server">#<asp:Label ID="Hashtag" runat="server" Text='<%#Eval("Hashtag")%>'></asp:Label>
-                                <span class="badge pull-right"><asp:Label ID="HCounter" runat="server" Text='<%#Eval("HCounter")%>'></asp:Label> </span></asp:LinkButton>
-                                 </li>
+                            <li class="list-group-item"><a class="btn" href='<%# FormatUrlSearchHash( (String) Eval("Hashtag")) %>' role="button">#<asp:Label ID="Hashtag" runat="server" Text='<%#Eval("Hashtag")%>'></asp:Label>
+                                <span class="badge pull-right"><asp:Label ID="HCounter" runat="server" Text='<%#Eval("HCounter")%>'></asp:Label> </span>
+                                 </a></li>
                         </ItemTemplate>  
                      </asp:ListView>
              
                 <li class="sidebar-brand">
-                    <a href="#"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;Trend Categories</a>
+                    <a href="#"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;Popüler Kategoriler</a>
                 </li>
 
                 <asp:ListView id="CategoryList" runat="server">
                 <ItemTemplate>
                 <li class="list-group-item">
-                <span class="label label-success"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;<asp:Label ID="Category" runat="server" Text='<%#Eval("Name")%>'></asp:Label></span>
+                <a class="btn" href='<%# FormatUrlSearchCat( (String) Eval("Name")) %>' role="button"><span class="label label-success"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;<asp:Label ID="Category" runat="server" Text='<%#Eval("Name")%>'></asp:Label></span></a>
                 </li>
                 </ItemTemplate>  
                 </asp:ListView>
@@ -35,7 +35,7 @@
     <br />
     <a href="#menu-toggle" class="btn btn-warning" id="menu-toggle"><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span></a>
     <br /><br />
-    <h2><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>&nbsp;Hot Queries</h2>
+    <h2><span class="glyphicon glyphicon-fire" aria-hidden="true"></span>&nbsp;Kafaya Takılanlar</h2>
         <!-- Page Content -->
             <div class="container-fluid">
                 <div class="row">
@@ -49,7 +49,7 @@
                 <!--<img src="img/matt-berninger.jpg" class="quote-face" />-->
                 <blockquote>
                   <p>
-                      <span class="label label-warning"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<asp:Label ID="Label1" runat="server" Text='<%#Eval("Username")%>'></asp:Label></span>
+                      <a href='<%# FormatUrlUser( (int) Eval("UserId")) %>' role="button"><span class="label label-warning"><span class="glyphicon glyphicon-user" aria-hidden="true"></span>&nbsp;<asp:Label ID="Label1" runat="server" Text='<%#Eval("Username")%>'></asp:Label></span></a>
                       <span class="label label-info"><span class="glyphicon glyphicon-ok-sign" aria-hidden="true"></span>&nbsp;<asp:Label ID="Label2" runat="server" Text='<%#Eval("AnswerCount")%>'></asp:Label></span>
                       <span class="label label-success"><span class="glyphicon glyphicon-tasks" aria-hidden="true"></span>&nbsp;<asp:Label ID="Label3" runat="server" Text='<%#Eval("Name")%>'></asp:Label></span>
                       

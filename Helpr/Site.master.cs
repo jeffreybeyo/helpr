@@ -110,6 +110,19 @@ public partial class SiteMaster : MasterPage
         Response.Redirect("Default.aspx", true);
     }
 
+    protected void search_click(object sender, EventArgs e)
+    {
+        String query = Searchboxtxt.Text;
+        if (!string.IsNullOrEmpty(query))
+        {
+            Response.Redirect("Search.aspx?SearchString=" + query, true);
+        }
+        else
+        {
+            Label1.Text = "Arama boş olamaz.";
+        }
+    }
+
 
     protected void Unnamed_LoggingOut(object sender, LoginCancelEventArgs e)
     {

@@ -43,7 +43,7 @@ public partial class Trends : System.Web.UI.Page
 
     private void GetPopularQueries()
     {
-        String query = "SELECT TOP 10 Q.Id,Q.Text,Q.Hashtag,C.Name,U.Username,Q.RegDate, AC.Counter AS AnswerCount, FUC.FUCount AS FollowUpCount FROM [dbo].[Queries] AS Q LEFT JOIN [dbo].[Users] U ON Q.UserId=U.Id LEFT JOIN [dbo].[Categories] C ON C.Id=Q.CategoryId LEFT JOIN [dbo].[AnswersCount] AC ON Q.Id=AC.QueryId LEFT JOIN [dbo].[FollowUpCount] FUc ON FUC.QueryId=Q.Id ORDER BY AC.Counter DESC, FUC.FUCount DESC";
+        String query = "SELECT TOP 10 Q.Id, Q.UserId, Q.Text,Q.Hashtag,C.Name,U.Username,Q.RegDate, AC.Counter AS AnswerCount, FUC.FUCount AS FollowUpCount, ((AC.Counter*0.6)+(FUC.FUCount*0.4)) AS 'TotalCount' FROM [dbo].[Queries] AS Q LEFT JOIN [dbo].[Users] U ON Q.UserId=U.Id LEFT JOIN [dbo].[Categories] C ON C.Id=Q.CategoryId LEFT JOIN [dbo].[AnswersCount] AC ON Q.Id=AC.QueryId LEFT JOIN [dbo].[FollowUpCount] FUc ON FUC.QueryId=Q.Id ORDER BY TotalCount DESC";
         SqlCommand cmd = new SqlCommand(query, con);
         con.Open();
         SqlDataReader dr = cmd.ExecuteReader();
@@ -70,5 +70,23 @@ public partial class Trends : System.Web.UI.Page
     {
         return "Answers.aspx?QueryId=" + Id;
 
+    }
+
+    protected string FormatUrlUser(int Id)
+    {
+        return "OProfile.aspx?UserId=" + Id;
+
+    }
+
+    protected string FormatUrlSearchHash(String Hashtag)
+    {
+        Hashtag = "-" + Hashtag;
+        return "Search.aspx?SearchString=" + Hashtag;
+    }
+
+    protected string FormatUrlSearchCat(String Category)
+    {
+        Category = "*" + Category;
+        return "Search.aspx?SearchString=" + Category;
     }
 }

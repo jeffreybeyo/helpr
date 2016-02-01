@@ -4,7 +4,16 @@ body {
     padding-bottom: 20px;
 }
 
+textarea
+{
+resize: none;
+}
 
+
+.row-padded {
+  background-color: #70ABD7;
+  color:#FFF;
+}
 
 
 /* USER PROFILE PAGE */

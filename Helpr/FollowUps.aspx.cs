@@ -36,7 +36,7 @@ public partial class FollowUps : System.Web.UI.Page
 
         else
         {
-            lblLoginError.Text = "Please Log In or Sign Up to display this page";
+            lblLoginError.Text = "Bu sayfayı görüntülemek için Giriş Yap veya Kayıt Ol.";
             Panel1.Visible = true;
         }
     }
